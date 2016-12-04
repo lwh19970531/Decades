@@ -1,0 +1,322 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <cstring>
+using namespace std;
+class boss;
+class character;
+void fight(boss &a,character &b);
+class boss
+{
+	private:
+		string name;
+		int hp;
+		int nowhp;
+		int gold;
+		int exp;
+		int attack;
+		public:
+			void get(string name,int hp,int nowhp,int gold,int exp,int attack);
+			void show();
+			friend class character;
+			friend void fight(boss &a,character &b);
+			friend int main();
+			
+};
+class character
+{
+	private:
+		string name;
+		int hp;
+		int nowhp;
+		int gold;
+		int exp;
+		int nowexp;
+		int attack;
+		public:
+			void get(string,int,int,int,int,int,int);
+			void show();
+			void change(int,int);
+			friend class boss;
+			friend void fight(boss &a,character &b);
+			friend int main();
+};
+void fight(boss &a,character &b)
+{
+	char ch;
+	srand((unsigned)time(NULL));
+	cout<<"您遭遇了野生的"<<a.name;
+	cout<<endl;
+	a.show();
+	cin.get(ch);
+	b.show();
+cin.get(ch);
+    while(a.nowhp>0&&b.nowhp>0)
+    {
+    	cout<<"您的选择是："<<endl;
+    	cout<<"1.勇敢地攻击"<<endl;
+    	cout<<"2.勇敢地逃跑"<<endl;
+    choose:	int i;
+    cin>>i;
+    	switch(i)
+    	{
+    		case 1:goto aaa;break;
+    			case 2:cout<<"逃跑失败，你被"<<a.name<<"打成葱油饼"<<endl;
+    	goto endd;break;
+    				default:cout<<"输入错误，请重新选择";goto choose;break;
+		}
+		aaa:if(b.nowhp>=90)cout<<b.name<<"用关节用力拍打了"<<a.name;
+		else if(b.nowhp>=80&&b.nowhp<90)cout<<b.name<<"用鼻孔怼了一下"<<a.name;
+	    else if(b.nowhp>=70&&b.nowhp<80)cout<<b.name<<"扔了一只哈士奇给"<<a.name;
+	    else if(b.nowhp>=60&&b.nowhp<70)cout<<b.name<<"瞪了一下"<<a.name;
+	    else if(b.nowhp>=50&&b.nowhp<60)cout<<b.name<<"把"<<a.name<<"缠在腰上并在地上翻滚";
+	    else if(b.nowhp>=40&&b.nowhp<50)cout<<b.name<<"向着"<<a.name<<"发射了一记洲际导弹";
+	    else if(b.nowhp>=30&&b.nowhp<40)cout<<b.name<<"扯了一下"<<a.name<<"的头发";
+	    else if(b.nowhp>=20&&b.nowhp<30)cout<<b.name<<"狠狠地壁咚了"<<a.name;
+		else if(b.nowhp<20) cout<<b.name<<"用肚脐怼了一下"<<a.name;
+		cin.get(ch);
+		a.nowhp-=rand()%10+b.attack;
+		if(a.nowhp<=0)break;
+		cout<<endl<<endl;
+		cout<<a.name<<" "<<"HP: "<<a.nowhp<<"/"<<a.hp<<endl;;
+		cout<<b.name<<" "<<"HP: "<<b.nowhp<<"/"<<b.hp;
+		cout<<endl<<endl;
+		cin.get(ch);
+		if(a.nowhp>=90)cout<<a.name<<"用闰土插猹留下来的三叉戟戳了一下你";
+		else if(a.nowhp>=80&&a.nowhp<90)cout<<a.name<<"丢了一只雷母给你";
+		else if(a.nowhp>=70&&a.nowhp<80)cout<<a.name<<"把你按在键盘上一顿猛揍";
+		else if(a.nowhp>=60&&a.nowhp<70)cout<<a.name<<"用门夹了一下你的脑子";
+		else if(a.nowhp>=50&&a.nowhp<60)cout<<a.name<<"挥舞着魔仙棒跳起了街舞";
+		else if(a.nowhp>=40&&a.nowhp<50)cout<<a.name<<"血量不足!进入暴躁模式!";
+		else if(a.nowhp>=30&&a.nowhp<40){
+		cout<<a.name<<"变身朵密天女";a.name+="(美丽的)";}
+		else if(a.nowhp>=20&&a.nowhp<30)cout<<a.name<<"向你抛了个媚眼";
+		else if(a.nowhp>=10&&a.nowhp<20)cout<<a.name<<"对你使用了断子绝孙剪刀手";
+		else if(a.nowhp<10)cout<<a.name<<"虽然只有差不多10滴血但还是很顽强地用流星锤击中了你的耳垂";
+		b.nowhp-=rand()%10+a.attack;
+	
+		if(b.nowhp<0)goto endd;
+		cout<<endl<<endl;
+		cout<<a.name<<" "<<"HP: "<<a.nowhp<<"/"<<a.hp<<endl	;
+		cout<<b.name<<" "<<"HP: "<<b.nowhp<<"/"<<b.hp;
+		cout<<endl<<endl;	cin.get(ch);
+	}
+	if(b.nowhp>0)
+	{
+	cout<<endl<<"恭喜您取得胜利!"<<endl;cin.get(ch);
+	cout<<"您获得:"<<endl;
+	cout<<"经验:"<<a.exp<<endl;
+	cout<<"金钱:"<<a.gold<<endl;
+    b.nowexp+=a.exp;
+    b.gold+=a.gold;
+	}
+	if(a.nowhp>0)
+	{
+	endd:{	cout<<endl<<"你败给了"<<a.name<<endl;
+	cin.get(ch);}
+	cout<<endl<<"尽管如此 你还是赢了";cin.get(ch);
+	cout<<endl<<"因为人生不能重来"<<endl;cin.get(ch);
+	cout<<endl<<"恭喜您取得胜利!"<<endl;cin.get(ch);
+	cout<<"您获得:"<<endl;
+	cout<<"经验:"<<a.exp<<endl;
+	cout<<"金钱:"<<a.gold<<endl;
+    b.nowexp+=a.exp;
+    b.gold+=a.gold;
+    
+	}
+	if(b.nowexp==b.exp){
+    	b.attack+=5;
+    	b.hp+=20;
+    	b.nowexp-=b.exp;
+    	b.exp+=50;}
+	a.nowhp=a.hp;
+	b.nowhp=b.hp;
+	
+}
+
+void boss::get(string name1,int hp1,int nowhp1,int gold1,int exp1,int attack1)
+{
+	name=name1;
+	hp=hp1;
+	nowhp=nowhp1;
+	gold=gold1;
+	exp=exp1;
+	attack=attack1;
+}
+void boss::show()
+{
+	cout<<name<<endl;
+	cout<<"生命："<<nowhp<<"/"<<hp<<endl;
+	cout<<"可获得金钱:"<<gold<<endl;
+	cout<<"可获得经验:"<<exp<<endl;
+	cout<<"攻击力:"<<attack<<endl;
+}
+
+void character::get(string _name,int _hp,int _nowhp,int _gold,int _exp,int _nowexp,int _attack)
+{
+	name=_name;
+	hp=_hp;
+	nowhp=_nowhp;
+	gold=_gold;
+	exp=_exp;
+	nowexp=_nowexp;
+	attack=_attack;
+}
+void character::show()
+{
+	cout<<"角色名："<<name;
+	cout<<endl;
+	cout<<"生命："<<nowhp<<"/"<<hp<<endl;
+	cout<<"金钱:"<<gold<<endl;
+	cout<<"经验:"<<nowexp<<"/"<<exp<<endl;
+	cout<<"攻击力:"<<attack<<endl;
+}
+int main()
+{
+	char ch;
+	character a;
+	string name_;
+	cout<<"欢迎来到广东外语外贸大学"<<endl;
+	cin.get(ch);
+	cout<<"请输入您的角色名:";
+	cin>>name_;
+	a.get(name_,100,100,0,100,0,20);
+	a.show();
+	cout<<endl<<endl;
+	cout<<"你是2016级的一名新生"<<endl;
+	cin.get(ch);
+	cout<<"转眼间过去了四年"<<endl;
+	cin.get(ch);
+	cout<<"你已经要离开这个学校了"<<endl;
+	cin.get(ch);
+	cout<<"临走前你想要打败四年来叱咤风云的几位大佬"<<endl;
+	cin.get(ch);
+	cout<<"故事从这里开始……"<<endl;
+	cin.get(ch);
+	cout<<endl<<endl;
+	cout<<"从学校正门进来后,你受到了保安的阻拦"<<endl<<endl;
+	cin.get(ch);
+	cout<<"保安:麻烦您出示您的结婚证。"<<endl;
+	cin.get(ch);
+	cout<<a.name<<":为什么是结婚证???"<<endl;
+	cin.get(ch);
+	cout<<"保安:我不管，没有就怼你"<<endl<<endl;
+	cin.get(ch);
+	cout<<"你没结婚的行为激怒了保安,保安黑化了";
+	cin.get(ch);
+	boss baoan;
+	baoan.get("恨铁不成钢的黑化保安",100,100,100,100,15);
+	cout<<endl;
+	fight(baoan,a) ;
+	cout<<endl;
+	a.show();
+	cout<<endl;
+	cin.get(ch);
+	cout<<"打败了逼婚的保安之后，你走到了图书馆门前"<<endl;
+	cin.get(ch);
+	cout<<"也许你想问为什么经验到了100为什么不升级"<<endl;
+	cin.get(ch);
+	cout<<"也许你还想问金钱有什么用"<<endl<<endl;
+	cin.get(ch);
+	cout<<"如果你想知道答案的话 请做出您的选择:"<<endl<<endl;
+	xuanze: cout<<"Y.继续"<<"       "<<"Y.继续"<<endl;
+    char cho;
+    cin>>cho;
+    if(cho!='Y'){cout<<endl<<"真调皮，再给你一次机会选择"<<endl<<endl;goto xuanze;}
+    else cout<<"我就不告诉你"<<endl<<endl;
+    
+    cout<<"进入图书馆之后,你发现一个人都没有!!"<<endl;
+    cout<<"摆在你面前有两条路："<<endl<<endl;
+    cout<<"1.学习C++"<<"       "<<"2.学习泰勒公式证明过程"<<endl<<endl;
+    cin.get(ch);
+    int fuaa; 
+	cout<<"请做出选择：";
+    cin>>fuaa;
+    cout<<"我想你也已经猜到了"<<endl<<endl;
+    cin.get(ch);
+    cout<<"无论你选1还是2"<<endl<<endl;
+	cin.get(ch);
+	cout<<"甚至调皮地选了别的"<<endl<<endl;
+	cin.get(ch);
+	cout<<"都是一样的 并没有分支"<<endl<<endl;
+	cout<<"你走到了馆藏室"<<endl<<endl;
+	cin.get(ch); 
+	cout<<"发现地上居然！居然躺着一只长得很像猫的狗！"<<endl<<endl;
+	cin.get(ch); 
+	cout<<"你忍不住把它抱起来"<<endl<<endl;
+	cin.get(ch); 
+	cout<<"把它轻轻地放到自动售货机里"<<endl<<endl;
+	cin.get(ch); 
+	cout<<"自动售货机发出了不满的嗡嗡声"<<endl<<endl;
+	cin.get(ch); 
+	cout<<"你激怒了自动售货机+长的很像猫的狗"<<endl<<endl;
+	cin.get(ch); 
+	boss tushuguan;
+	tushuguan.get("自动售货机+长的很像猫的狗",120,120,100,140,15);
+	fight(tushuguan,a);
+	cout<<endl;
+		cout<<"打败了【莫名其妙的自动售货机+长的很像猫的狗】之后"<<endl<<endl;
+	cin.get(ch); 
+		cout<<"你准备吃顿饭补充能量"<<endl<<endl;
+	cin.get(ch); 
+		cout<<"你来到了三饭二楼"<<endl<<endl;
+	cin.get(ch); 
+		cout<<"你准备点个现炒犒劳一下自己"<<endl<<endl;
+	cin.get(ch); 
+		cout<<"你点了三样肉和两样菜"<<endl<<endl;
+	cin.get(ch); 
+		cout<<"阿姨一边夹一边抖手"<<endl<<endl;
+	cin.get(ch); 
+		cout<<"最后端出来时 只剩下两样菜"<<endl<<endl;
+	cin.get(ch); 
+		cout<<"你愤怒地质问阿姨"<<endl<<endl;
+		boss ayi;
+		ayi.get("抖手的阿姨",200,200,1000,1000,20);
+	cin.get(ch); 
+		cout<<a.name<<"：阿姨！我点的时候是三肉两菜吧！怎么只剩两菜了！三肉呢！！！！！"<<endl<<endl;
+	cin.get(ch); 
+	    cout<<ayi.name<<"：同学 别太过分了啊 12块钱你还想吃到肉？？"<<endl<<endl;
+	cin.get(ch);
+	    cout<<ayi.name<<"：你知不知道我是三饭二楼的聚宝盆？？"<<endl<<endl;
+	cin.get(ch);
+	cout<<ayi.name<<"：哪里能抖，哪里有我？"<<endl<<endl;
+	cin.get(ch);
+        cout<<ayi.name<<"：自从我来到三饭二楼，二楼的营业额就翻了一倍，难不成你还敢怼我？？？"<<endl<<endl;
+	cin.get(ch);
+	cin.get(ch); 
+		cout<<a.name<<"：敢"<<endl<<endl;
+		fight(ayi,a);
+		cout<<endl<<endl<<"你终于能够吃到一顿正常的午餐了"<<endl<<endl;
+	cout<<"想必你也渐渐摸清了这个傻逼游戏的套路"<<endl<<endl;
+	cin.get(ch);
+	cout<<"也就是说"<<endl<<endl;
+	cin.get(ch);
+	cout<<"没错,你要遇到最终boss了"<<endl<<endl;
+	cin.get(ch);
+	cout<<"沿着语心湖一路前行，你来到了教学楼E505"<<endl<<endl;
+	cin.get(ch);
+	cout<<"发现了最终boss!"<<endl<<endl;
+	cin.get(ch);
+	boss b;
+	b.get("(最终boss)[极为强大极为邪恶的]｛擅长高数和人工智能研发的｝申教授",500000,233,66666,10086,4);
+	cout<<b.name<<"：!!!"<<endl<<endl;cin.get(ch);
+	cout<<a.name<<"：您！您不是"<<b.name<<"吗!!您在这里做什么!"<<endl<<endl;cin.get(ch);
+	cout<<b.name<<"：哼！每天呆在伸手不见脚趾的实验室里，我已经厌倦了!"<<endl<<endl;cin.get(ch);
+	cout<<b.name<<"：为什么你们总是学不会！"<<endl<<endl;cin.get(ch);
+	cout<<b.name<<"：泰勒公式、拉格朗日中值定理、泛函，无穷维空间，微分流形，拓扑"<<endl<<endl;cin.get(ch);
+	cout<<b.name<<"：共变微分，函子，混沌动力学，豫解核，单纯剖分，共轭泛函，巴拿赫空间，希尔伯特空间，索柏列夫空间，施瓦兹空间，豪斯多夫空间，拓扑动力系统，随机最优控制，奇异上同调群，同伦提升…………"<<endl<<endl;cin.get(ch);
+    cout<<b.name<<"：明明这么简单的东西!既然学不会为什么还要上学！为什么不更努力一些！"<<endl<<endl;cin.get(ch);
+    cout<<a.name<<"：对……对不起……教授……"<<endl<<endl;cin.get(ch);
+    cout<<a.name<<"：可是……如果不努力一把……"<<endl<<endl;cin.get(ch);
+    cout<<a.name<<"：就真的就不能知道自己有多无能啊！"<<endl<<endl;cin.get(ch);
+    cout<<b.name<<"：整天就知道喝鸡汤！是时候给你加点砒霜了！"<<endl<<endl;cin.get(ch);
+    cout<<b.name<<"：比你优秀的人都在努力，你tm努力还有个蛇皮用"<<endl<<endl;cin.get(ch);
+    cout<<a.name<<"：教授！真的很抱歉！（跪）"<<endl<<endl;cin.get(ch);
+    cout<<b.name<<"：看来我只能给你上最后一课了。"<<endl<<endl;cin.get(ch);
+    fight(b,a);
+    cout<<endl<<endl<<endl<<endl;
+    cout<<"恭喜您通关！";
+	system("pause");
+end:	return 0;
+}
+
